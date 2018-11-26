@@ -23,8 +23,8 @@ Just run 'python FA.py' with command-line interface.
 ```
 usage: Furaffinity Gallery Downloader [-h] [-s] [-d] [-m] [-c]
 
-Furaffinity Gallery Downloader use multiprocess tech to scrapy full size
-download urls which will be inset into mysql database and download artwork
+Furaffinity Gallery Downloader use multiprocessing to scrapy full size
+download urls which will be insert into mysql database and download artwork
 from the database rapidly.
 
 optional arguments:
