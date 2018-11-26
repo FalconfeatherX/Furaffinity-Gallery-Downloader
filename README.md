@@ -38,7 +38,7 @@ optional arguments:
 After the first run,artist.txt and cookies.txt will be created,you can only put one artist into the txt with no \n followed.
 
 ## Information must be put in
-Downloader has no default info,so three parameter are requried in Constant.py
+Downloader has no default config,so three parameter are requried in Constant.py
 
 Requrie cookies to login if want to download adult content.
 
