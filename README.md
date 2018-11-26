@@ -14,6 +14,8 @@ Python 3.6+
 
 BeautifulSoup4
 
+requests
+
 ## Installing
 Just run 'python FA.py' with command-line interface.
 
@@ -34,6 +36,8 @@ optional arguments:
   ```
 
 ## Information must be put in
+Downloader has no default info,so three parameter are requried in Constant.py
+
 Requrie cookies to login if want to download adult content.
 
 cookies is a json file,for instance,should be like:
