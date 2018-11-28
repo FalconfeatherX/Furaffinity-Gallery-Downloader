@@ -9,7 +9,6 @@ import Constant
 import requests
 
 class Scraper():
-    ERRORLIST = []
     def __init__(self):
         self.url =  Constant.URL + 'gallery/'
         self.headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36"}
@@ -40,43 +39,39 @@ class Scraper():
         self.post_list = set(self.post_list)
         self.post_list = list(self.post_list)
 
-
     def get_download_urls_and_table_stuffs(self,args):
         download_links,datum = args;keyword = '';data = []
+
+        downloadcontent = self.connect_urls(Constant.URL + download_links).text
+        time.sleep(Constant.INTERVAL)
+        soup = BeautifulSoup(downloadcontent,'lxml')
+        compiler = re.compile(r'//d.facdn.net\S+[fgt3]')
+        adults = soup.find('div',{'align':"left"})
+        tags   = soup.find('div', {'id': 'keywords'})
+        links  = soup.find('div',{'class':"alt1 actions aligncenter"})
+        links  = compiler.findall(str(links))
+        for real in links:
+            strlink = real
+        if 'adult' in str(adults.img):
+            adult = 1        #if have adult content,will be set to 1 else 0
+        else:
+            adult = 0
+
         try:
-            downloadcontent = self.connect_urls(Constant.URL + download_links).text
-            time.sleep(Constant.INTERVAL)
-
-            soup = BeautifulSoup(downloadcontent,'lxml')
-            adults = soup.find('div',{'align':"left"})
-            tags   = soup.find('div', {'id': 'keywords'})
-
-            if 'adult' in str(adults.img):
-                adult = 1        #if have adult content,will be set to 1 else 0
-            else:
-                adult = 0
-
-            try:
-                for i in tags.text.split():
-                    keyword = keyword + i + ' '#keywords parser
-                if len(keyword) > 100:
-                    keyword = keyword[:100]    #cut the lenth of keywords
-            except:
-                keyword = 'None'               #if have no keywords
-
-            keywords = keyword
-            name     = soup.find('th',{'class':"cat"}).text.strip()#artwork name
-            link     = soup.find('img',{'id':"submissionImg"})['data-fullview-src']#artwork fullsize link
-            artist   = self.tag      #artwork artisr
-
-            data.append(str(name));data.append(str(artist));data.append(str(keywords))
-            data.append(str(link));data.append(adult)
-            datum.append(data)
-
+            for i in tags.text.split():
+                keyword = keyword + i + ' '#keywords parser
+            if len(keyword) > 100:
+                keyword = keyword[:100]    #cut the lenth of keywords
         except:
-            print('error' + download_links)
-            Scraper.ERRORLIST.append(Constant.URL + download_links)
+            keyword = 'None'               #if have no keywords
 
+        keywords = keyword
+        link = strlink
+        name     = soup.find('th',{'class':"cat"}).text.strip()#artwork name
+        artist   = self.tag      #artwork artisr
+        data.append(str(name));data.append(str(artist));data.append(str(keywords))
+        data.append(str(link));data.append(adult)
+        datum.append(data)
 
     def page_check(self):
         MAX = 'There are no submissions to list'
