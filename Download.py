@@ -21,7 +21,7 @@ class Download:
         results,list_share = args
         print(results)
         AL = self.artist_lenth
-        Startline = AL + 40
+        Startline = AL + 43
 
         if not results[Startline:]:
             print('Name Error')
