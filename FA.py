@@ -30,12 +30,6 @@ if __name__ == '__main__':
             datum = spider.multi_crawler()
             db.databaseinsert(datum)
 
-            for i in spider.ERRORLIST:
-                arg = zip(i,[])
-                try:
-                    spider.get_download_urls_and_table_stuffs(arg)
-                except:
-                    print('Scrape failed')
             time.sleep(1)
             print(singleurl + ' done.')
 
