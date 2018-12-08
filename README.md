@@ -16,6 +16,8 @@ BeautifulSoup4
 
 requests
 
+pymysql
+
 ## Installing
 Just run 'python FA.py' with command-line interface.
 
