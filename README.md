@@ -31,7 +31,7 @@ from the database rapidly.
 
 optional arguments:
   -h, --help      show this help message and exit
-  -s, --scrapy    Scrape only
+  -s, --scrape    Scrape only
   -d, --download  Download from database
   -m, --mix       Scrape and download，not recommended
   -c, --check     Check how many pages,72 per page
