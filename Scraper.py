@@ -25,13 +25,21 @@ class Scraper():
 
 
     def get_gallery_url(self):
-        self.url = self.url + self.tag
-        return self.url
+        if Constant.SCRAPS == True:
+            self.scraps = self.scraps + self.tag
+            return self.scraps
+        else:
+            self.url = self.url + self.tag
+            return self.url
 
 
     def get_post_url(self,singleurl):
         self.post_list = []
-        urlcontent = self.connect_urls(singleurl).text
+        try:
+            urlcontent = self.connect_urls(singleurl).text
+        except:
+            print('Reconnected : ')
+            urlcontent = self.connect_urls(singleurl).text
         compiler = re.compile(r'view/\d+/')
         result = compiler.findall(urlcontent)
         for transfers in result:
@@ -39,17 +47,26 @@ class Scraper():
         self.post_list = set(self.post_list)
         self.post_list = list(self.post_list)
 
-    def get_download_urls_and_table_stuffs(self,args):
-        download_links,datum = args;keyword = '';data = []
 
-        downloadcontent = self.connect_urls(Constant.URL + download_links).text
+    def get_download_urls_and_table_stuffs(self,args):
+        download_links,datum,errorlist = args;keyword = '';
+
+        downloadcontent = self.connect_urls(Constant.URL + download_links)
+
+        if not downloadcontent:
+            errorlist.append(download_links)
+            return False
+
+        else:
+            downloadcontent = downloadcontent.text
         time.sleep(Constant.INTERVAL)
         soup = BeautifulSoup(downloadcontent,'lxml')
         compiler = re.compile(r'//d.facdn.net\S+[fgt3]')
         adults = soup.find('div',{'align':"left"})
-        tags   = soup.find('div', {'id': 'keywords'})
+        tags   = soup.find('div',{'id': 'keywords'})
         links  = soup.find('div',{'class':"alt1 actions aligncenter"})
         links  = compiler.findall(str(links))
+        name   = soup.find('th',{'class':"cat"}).text.strip()
         for real in links:
             strlink = real
         if 'adult' in str(adults.img):
@@ -65,20 +82,25 @@ class Scraper():
         except:
             keyword = 'None'               #if have no keywords
 
-        keywords = keyword
-        link = strlink
-        name     = soup.find('th',{'class':"cat"}).text.strip()#artwork name
+        keywords = keyword.rstrip()
+        link     = strlink
+        name     = name.replace('"','\'')#artwork name
         artist   = self.tag      #artwork artisr
-        data.append(str(name));data.append(str(artist));data.append(str(keywords))
-        data.append(str(link));data.append(adult)
+
+        nametup = (str(name),);artisttup = (str(artist),);keywordstup = (str(keywords),);
+        linktup = (str(link),);adulttup  = (adult,)
+        data = nametup + artisttup + keywordstup + linktup + adulttup
         datum.append(data)
+
+
+
 
     def page_check(self):
         MAX = 'There are no submissions to list'
         page_list = self.page_list
-        self.get_gallery_url()
+        url = self.get_gallery_url()
         for pages in range(Constant.MAXPAGE):
-            realurl = self.url + '/' + str(pages+1) + '/?perpage=72'
+            realurl = url + '/' + str(pages+1) + '/?perpage=72'
             newcontent = self.connect_urls(realurl)             #search for the max page
             if len(re.findall(MAX,newcontent.text)):            #由于FA会出现超出画廊最大数后不会404，所以
                 break                                           #用唯一字符串匹配结束循环
@@ -89,11 +111,17 @@ class Scraper():
         return str(pages)
 
 
-    def multi_crawler(self):
+    def multi_crawler(self,post_list = []):
         results = Manager().list()
-        data = zip(self.post_list,repeat(results))
+        error   = Manager().list()
+        if post_list:
+            post_list = post_list
+        else:
+            post_list = self.post_list
+        data = zip(post_list,repeat(results),repeat(error))
         workers = Pool(Constant.THREADS)
+        print(post_list)
         workers.map(self.get_download_urls_and_table_stuffs,data)
         workers.close()
         workers.join()
-        return results
+        return results,error
