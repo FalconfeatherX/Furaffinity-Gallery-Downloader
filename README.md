@@ -59,6 +59,8 @@ cookies is a json file,for instance,should be like:
  The path(PATH) of storage space to store artist.txt,cookies.txt and artwork downloaded which looks like:
  
  ```'E:\\FA\\'```
+ 
+ Now you can download SCRAPS by turning 'SCRAPS = False' to 'SCRAPS = True'.
 
 ## Nothing important
 好长啊，我还是第一次用python写爬虫，写的有点烂，见谅啊。
