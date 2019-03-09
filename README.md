@@ -44,7 +44,7 @@ Downloader has no default config,so three parameter are requried in Constant.py
 
 Requrie cookies to login if want to download adult content.
 
-cookies is a json file,for instance,should be like:
+cookies,for instance,should be like:
 ```
 {
 'id':'ssasasa',
@@ -54,7 +54,7 @@ cookies is a json file,for instance,should be like:
  
  cookies.txt file will be created when running for the first time.
  
- This downloader used MYSQL database to manage everything it scraped,so you should at least create a database.If have one,password(PASSWORD) and database name(DB) are required in Constant.py.
+ This downloader uses MYSQL database to manage everything it scraped,so you should at least create a database.If have one,password(PASSWORD) and database name(DB) are required in Constant.py.
  
  The path(PATH) of storage space to store artist.txt,cookies.txt and artwork downloaded which looks like:
  
