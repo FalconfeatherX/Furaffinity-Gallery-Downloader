@@ -29,7 +29,10 @@ if __name__ == '__main__':
             spider.get_post_url(singleurl)
             datum = spider.multi_crawler()
             db.databaseinsert(datum)
-
+            if error:
+                redatum,error = spider.multi_crawler(error)
+                db.databaseinsert(redatum)
+                print(reconnect:singleurl + ' done.')
             time.sleep(1)
             print(singleurl + ' done.')
 
@@ -46,6 +49,11 @@ if __name__ == '__main__':
             spider.get_post_url(singleurl)
             datum = spider.multi_crawler()
             db.databaseinsert(datum)
+            if error:
+                spider.multi_crawler(error)
+                redatum,error = spider.multi_crawler(error)
+                db.databaseinsert(redatum)
+                
             print(singleurl + ' done.')
             print(singleurl + ' start downloading.')
             output = db.databaseoutput(spider.tag)
