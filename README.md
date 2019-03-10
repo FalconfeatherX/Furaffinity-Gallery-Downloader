@@ -56,7 +56,7 @@ cookies,for instance,should be like:
  
  This downloader uses MYSQL database to manage everything it scraped,so you should at least create a database.If have one,password(PASSWORD) and database name(DB) are required in Constant.py.
  
- The path(PATH) of storage space to store artist.txt,cookies.txt and artwork downloaded which looks like:
+ The path(PATH) of storage space to store artist.txt,cookies.txt and downloaded artworks which should be like:
  
  ```'E:\\FA\\'```
  
