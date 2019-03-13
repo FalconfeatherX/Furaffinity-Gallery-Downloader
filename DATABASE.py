@@ -13,9 +13,9 @@ class Database():
        | Field     | Type      | Null | Key | Default | Extra          |
        +-----------+-----------+------+-----+---------+----------------+
        | id        | int(11)   | NO   | PRI | NULL    | auto_increment |
-       | name      | char(50)  | YES  |     | NULL    |                |
+       | name      | char(65)  | YES  |     | NULL    |                |
        | artist    | char(15)  | YES  |     | NULL    |                |
-       | keywords  | char(150) | YES  |     | NULL    |                |
+       | keywords  | char(250) | YES  |     | NULL    |                |
        | link      | char(180) | NO   | UNI | NULL    |                |
        | adult     | int(11)   | YES  |     | NULL    |                |
        | downloaded| int(11)   | NO   |     | 0       |                |
@@ -28,9 +28,9 @@ class Database():
         cursor = self.database.cursor()
         order = '''create table if not exists Artwork(
                     id         int        not null PRIMARY KEY auto_increment,
-                    name       char(50),
+                    name       char(65),
                     artist     char(31),
-                    keywords   char(150),
+                    keywords   char(250),
                     link       char(180)  not null UNIQUE KEY,
                     adult      int,
                     downloaded int        Default 0
@@ -154,3 +154,21 @@ class Database():
              except:
                  print('Update error')
          database.close()
+        
+    def databaseupdate(self,olds,news):
+        update = []
+        olds = self.databaseoutput(olds,'****')
+
+        for new in news:
+            for old in olds:
+                if old == new:
+                    break
+                if old == olds[-1]:
+                    print(new)
+                    print('*********************************')
+                    update.append(new)
+
+        self.databaseinsert(update)
+
+        print('Updated %d artwork.'%(len(update)))
+        return(len(update))
