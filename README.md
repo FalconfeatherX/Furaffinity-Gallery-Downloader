@@ -8,7 +8,7 @@ This is a simple and highspeed downloader which may lead to mass network accesse
 When using,please set a reasonbale interval and make sure the amount of artworks is not excessive.We all want FA a better place to browse.
 
 ## Requirements:
-MYSQL 8.0
+MYSQL 5+
 
 Python 3.6+
 
