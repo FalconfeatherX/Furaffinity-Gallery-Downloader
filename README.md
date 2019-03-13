@@ -35,6 +35,7 @@ optional arguments:
   -d, --download  Download from database
   -m, --mix       Scrape and download，not recommended
   -c, --check     Check how many pages,72 per page
+  -u, --update    Update Gallery
   ```
 
 After the first run,artist.txt and cookies.txt will be created,you can only put one artist into the txt with no \n followed.
