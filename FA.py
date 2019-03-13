@@ -13,6 +13,7 @@ if __name__ == '__main__':
     parser.add_argument('-d','--download',action = 'store_true',help = 'Download from database')
     parser.add_argument('-m','--mix',action = 'store_true',help = 'Scrape and download，not recommended')
     parser.add_argument('-c','--check',action = 'store_true',help = 'Check how many pages')
+    parser.add_argument('-u','--update',action = 'store_true',help = 'Update Gallery')
     args = parser.parse_args()
 
     spider = Scraper()
@@ -61,3 +62,12 @@ if __name__ == '__main__':
             db.databasedownloaded(datum)
             print(singleurl + ' downloading finished')
         print('Downloading all finished')
+
+    if args.update:
+        spider.page_check()
+        for singleurl in spider.page_list:
+            spider.get_post_url(singleurl)
+            datum,error = spider.multi_crawler()
+            ifupdate = db.databaseupdate(spider.tag,datum)
+            if ifupdate >=0 and ifupdate <72:
+                break        
