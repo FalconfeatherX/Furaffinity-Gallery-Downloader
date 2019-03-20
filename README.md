@@ -23,7 +23,7 @@ Just run 'python FA.py' with command-line interface.
 
 ## How to use
 ```
-usage: Furaffinity Gallery Downloader [-h] [-s] [-d] [-m] [-c]
+usage: Furaffinity Gallery Downloader [-h] [-s] [-d] [-m] [-c] [-u]
 
 Furaffinity Gallery Downloader use multiprocessing to scrapy full size
 download urls which will be insert into mysql database and download artwork
