@@ -122,23 +122,35 @@ class Database():
         database.close()
 
 
-    def databaseoutput(self,artist):
+    def databaseoutput(self,artist,switch = '***'):
         output = []
         database = pymysql.connect(host="localhost",user="root",
         password=self.password,db=self.db,port=3306)
         cursor = database.cursor()
-        order = ('''
-                select link from artwork where artist = '%s' and downloaded = 0
-                '''%(artist))
+        if switch == '****':
+            order = ('''
+                    select name,artist,keywords,link,adult from Artwork where artist = '%s'
+                    '''%(artist))
+        else:
+            order = ('''
+                    select link from Artwork where artist = '%s' and downloaded = 0
+                    '''%(artist))
         try:
             cursor.execute(order)
             results = cursor.fetchall()
             database.close()
+
+        except:
+            print('Fetch error')
+
+        if switch == '****':
+            for i in list(results):
+                output.append(i)
+        else:
             for i in list(results):
                 for k in list(i):
                     output.append('http:' + k)
-        except :
-            print('Fetch error')
+
         return output
 
     def databasedownloaded(self,results):
