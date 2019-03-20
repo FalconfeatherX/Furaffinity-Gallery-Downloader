@@ -48,7 +48,7 @@ if __name__ == '__main__':
         spider.page_check()
         for singleurl in spider.page_list:
             spider.get_post_url(singleurl)
-            datum = spider.multi_crawler()
+            datum,error = spider.multi_crawler()
             db.databaseinsert(datum)
             if error:
                 spider.multi_crawler(error)
