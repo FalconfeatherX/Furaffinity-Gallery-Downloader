@@ -33,7 +33,7 @@ if __name__ == '__main__':
             if error:
                 redatum,error = spider.multi_crawler(error)
                 db.databaseinsert(redatum)
-                print(reconnect:singleurl + ' done.')
+                print('reconnect' + singleurl + 'done.')
             time.sleep(1)
             print(singleurl + ' done.')
 
