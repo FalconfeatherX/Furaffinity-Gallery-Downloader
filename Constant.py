@@ -18,3 +18,5 @@ TEXT     = '''Furaffinity Gallery Downloader use multiprocess tech
         and download artwork from the database rapidly.'''
 
 SCRAPS   = False
+
+FAVS     = False
