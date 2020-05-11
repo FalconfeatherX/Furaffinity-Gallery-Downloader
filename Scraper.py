@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 import re
 import time
@@ -8,10 +7,13 @@ from itertools import repeat
 import Constant
 import requests
 
-class Scraper():
+class Scrapy():
     def __init__(self):
         self.url =  Constant.URL + 'gallery/'
+        self.scraps = Constant.URL + 'scraps/'
+        self.favs = Constant.URL + 'favorites/'
         self.headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36"}
+        self.scraper = requests.session()
         self.data = Kits.cookies(Kits)
         self.tag = Kits.get_artist_name(Kits)
         self.page_list = []
@@ -19,15 +21,18 @@ class Scraper():
 
     def connect_urls(self,url):
         try:
-            return requests.Session().get(url,headers = self.headers,cookies = self.data,timeout = 30)
+            return self.scraper.get(url,headers = self.headers,cookies = self.data,timeout = 15)
         except:
-            print('%s Connected error'%url)
-
+            print('%s connected error: '%url)
+            return False
 
     def get_gallery_url(self):
         if Constant.SCRAPS == True:
             self.scraps = self.scraps + self.tag
             return self.scraps
+        elif Constant.FAVS == True:
+            self.favs = self.favs + self.tag
+            return self.favs
         else:
             self.url = self.url + self.tag
             return self.url
@@ -59,26 +64,27 @@ class Scraper():
 
         else:
             downloadcontent = downloadcontent.text
+
         time.sleep(Constant.INTERVAL)
         soup = BeautifulSoup(downloadcontent,'lxml')
         compiler = re.compile(r'//d.facdn.net\S+[fgt3]')
-        adults = soup.find('div',{'align':"left"})
-        tags   = soup.find('div',{'id': 'keywords'})
-        links  = soup.find('div',{'class':"alt1 actions aligncenter"})
+        adults = soup.find('div',{'class':"rating"})
+        tags   = soup.find('section',{'class':"tags-mobile"})
+        links  = soup.find('div',{'class':"aligncenter auto_link hideonfull1 favorite-nav"})
+        name   = soup.find('div',{'class':"submission-title"}).text.strip()
+
         links  = compiler.findall(str(links))
-        name   = soup.find('th',{'class':"cat"}).text.strip()
         for real in links:
             strlink = real
-        if 'adult' in str(adults.img):
-            adult = 1        #if have adult content,will be set to 1 else 0
+        if ' Adult' in str(adults):
+            adult = 1                      #if have adult content,will be set to 1 else 0
         else:
             adult = 0
 
         try:
             for i in tags.text.split():
                 keyword = keyword + i + ' '#keywords parser
-            if len(keyword) > 100:
-                keyword = keyword[:100]    #cut the lenth of keywords
+
         except:
             keyword = 'None'               #if have no keywords
 
@@ -89,7 +95,7 @@ class Scraper():
 
         nametup = (str(name),);artisttup = (str(artist),);keywordstup = (str(keywords),);
         linktup = (str(link),);adulttup  = (adult,)
-        data = nametup + artisttup + keywordstup + linktup + adulttup
+        data = nametu + artisttup + keywordstup + linktup + adulttup
         datum.append(data)
 
 
@@ -99,17 +105,34 @@ class Scraper():
         MAX = 'There are no submissions to list'
         page_list = self.page_list
         url = self.get_gallery_url()
-        for pages in range(Constant.MAXPAGE):
-            realurl = url + '/' + str(pages+1) + '/?perpage=72'
-            newcontent = self.connect_urls(realurl)             #search for the max page
-            if len(re.findall(MAX,newcontent.text)):            #由于FA会出现超出画廊最大数后不会404，所以
-                break                                           #用唯一字符串匹配结束循环
-            else:
+        if not Constant.FAVS:
+            for pages in range(Constant.MAXPAGE):
+                realurl = url + '/' + str(pages+1) + '/?perpage=72'
+                newcontent = self.connect_urls(realurl)             #search for the max page
+                if len(re.findall(MAX,newcontent.text)):            #由于FA会出现超出画廊最大数后不会404，所以
+                    break                                           #用唯一字符串匹配结束循环
+                else:
+                    print(realurl)
+                    page_list.append(realurl)
+        else:
+            pages = 1
+            self.page_list.append(url)
+            while True:
+                realurl = self.page_list[-1]
                 print(realurl)
-                page_list.append(realurl)
-        print(str(pages) + ' ' + 'can be found')
+                newcontent = self.connect_urls(realurl)
+                compiler   = re.compile(r'/[0-9]+/next')
+                result     = compiler.findall(newcontent.text)
+                print(result)
+                if result:
+                    page_list.append(url + str(result[0]))
+                    pages += 1
+                else:
+                    print(self.page_list)
+                    break
+        print(str(pages)+' can be found')
+        print(self.page_list)
         return str(pages)
-
 
     def multi_crawler(self,post_list = []):
         results = Manager().list()
