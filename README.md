@@ -61,7 +61,7 @@ cookies,for instance,should be like:
  
  ```'E:\\FA\\'```
  
- Now you can download SCRAPS by turning 'SCRAPS = False' to 'SCRAPS = True'.
+ Now you can download SCRAPS and FAV by turning 'XX = False' to 'XX = True'.
 
 ## Nothing important
 好长啊，我还是第一次用python写爬虫，写的有点烂，见谅啊。
