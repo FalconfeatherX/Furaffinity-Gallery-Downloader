@@ -1,11 +1,11 @@
 # FA-Gallery-Downloader
 ## Description
-A scraper and downloader targeted at Furaffinity written with python.Use BeautifulSoup and multiprocessing to scrape and download artwork from gallery.
+A scraper and downloader targeted at Furaffinity written with python. Use BeautifulSoup and multiprocessing to scrape and download artworks.
 
 ## About the downloader
-This is a simple and highspeed downloader which may lead to mass network accesses if have no limit.In this case,this downloader is for studying database and multiprocessing.
+This is a simple and highspeed downloader which may lead to mass network accesses if have no limit. In this case,this downloader is for studying database and multiprocessing.
 
-When using,please set a reasonbale interval and make sure the amount of artworks is not excessive.We all want FA a better place to browse.
+When using,please set a reasonbale interval and make sure the amount of artworks is not excessive. We all want FA a better place to browse.
 
 ## Requirements:
 MYSQL 5+
@@ -33,7 +33,7 @@ optional arguments:
   -h, --help      show this help message and exit
   -s, --scrape    Scrape only
   -d, --download  Download from database
-  -m, --mix       Scrape and download，not recommended
+  -m, --mix       Scrape and download，one page scrape, one page download.
   -c, --check     Check how many pages,72 per page
   -u, --update    Update Gallery
   ```
