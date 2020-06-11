@@ -3,9 +3,9 @@
 A scraper and downloader targeted at Furaffinity written with python. Use BeautifulSoup and multiprocessing to scrape and download artworks.
 
 ## About the downloader
-This is a simple and highspeed downloader which may lead to mass network accesses if have no limit. In this case,this downloader is for studying database and multiprocessing.
+This is a simple and highspeed downloader which may lead to mass network accesses if have no limit. In this case, this downloader is for studying database and multiprocessing.
 
-When using,please set a reasonbale interval and make sure the amount of artworks is not excessive. We all want FA a better place to browse.
+When using, please set a reasonbale interval and make sure the amount of artworks is not excessive. We all want FA a better place to browse.
 
 ## Requirements:
 MYSQL 5+
@@ -38,14 +38,14 @@ optional arguments:
   -u, --update    Update Gallery
   ```
 
-After the first run,artist.txt and cookies.txt will be created,you can only put one artist into the txt with no \n followed.
+After the first run,artist.txt and cookies.txt will be created, you can only put one artist into the txt with no \n followed.
 
 ## Config
-Downloader has no default config,so three parameters are requried in Constant.py
+Downloader has no default config, so three parameters are requried in Constant.py
 
 Requrie cookies to login if want to download adult content.
 
-cookies,for instance,should be like:
+cookies, for instance, should be like:
 ```
 {
 'id':'ssasasa',
@@ -55,9 +55,9 @@ cookies,for instance,should be like:
  
  cookies.txt file will be created when running for the first time.
  
- This downloader uses MYSQL database to manage everything it scraped,so you should at least create a database.If have one,password(PASSWORD) and database name(DB) are required in Constant.py.
+ This downloader uses MYSQL database to manage everything it scraped, so you should at least create a database.If have one,password(PASSWORD) and database name(DB) are required in Constant.py.
  
- The path(PATH) of storage space to store artist.txt,cookies.txt and downloaded artworks which should be like:
+ The path(PATH) of storage space to store artist.txt, cookies.txt and downloaded artworks which should be like:
  
  ```'E:\\FA\\'```
  
