@@ -70,7 +70,7 @@ class Scrapy():
         compiler = re.compile(r'//d.facdn.net\S+[fgt3]')
         adults = soup.find('div',{'class':"rating"})
         tags   = soup.find('section',{'class':"tags-mobile"})
-        links  = soup.find('div',{'class':"aligncenter auto_link hideonfull1 favorite-nav"})
+        links  = soup.find('div',{'class':"download"}) #fa日常会更改域名，要注意
         name   = soup.find('div',{'class':"submission-title"}).text.strip()
 
         links  = compiler.findall(str(links))
