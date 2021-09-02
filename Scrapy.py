@@ -95,7 +95,7 @@ class Scrapy():
 
         nametup = (str(name),);artisttup = (str(artist),);keywordstup = (str(keywords),);
         linktup = (str(link),);adulttup  = (adult,)
-        data = nametu + artisttup + keywordstup + linktup + adulttup
+        data = nametup + artisttup + keywordstup + linktup + adulttup
         datum.append(data)
 
 
