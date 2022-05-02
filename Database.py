@@ -150,8 +150,3 @@ class Database():
             print('Fetch error')
         return artists
 
-
-if __name__ == '__main__':
-    db = Database()
-    rs = db.database_output("falconfeather")
-    print(rs)

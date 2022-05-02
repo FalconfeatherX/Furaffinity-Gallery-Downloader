@@ -178,8 +178,3 @@ class Scrape:
         workers.close()
         workers.join()
         return results, error
-
-if __name__ == "__main__":
-    sm = Scrape()
-    args = ("view/43980772/",[],[])
-    mc = sm.get_download_urls_and_table_stuffs(args)

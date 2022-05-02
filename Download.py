@@ -109,12 +109,3 @@ class Download:
         workers.close()
         workers.join()
         return list_share
-
-
-if __name__ == "__main__":
-    downloader = Download()
-    list_result = [
-        ('http://d.furaffinity.net/art/falconfeather/1623253160/1623253160.falconfeather_整楼模型.jpg', 'falconfeather'), (
-            'http://d.furaffinity.net/art/falconfeather/1623257823/1623257823.falconfeather_untitled.jpg',
-            'falconfeather')]
-    downloader.multi_download(list_result)
